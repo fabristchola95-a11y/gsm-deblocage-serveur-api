@@ -1,0 +1,88 @@
+# API revendeurs — GSM Déblocage Serveur
+
+Connectez votre site ou votre logiciel à **GSM Déblocage Serveur** : services, prix, commandes automatiques et résultats.
+
+- Documentation en ligne + testeur : https://gsmdeblocageserveur.com/v2/api_docs.php
+- Obtenir sa clé API : https://gsmdeblocageserveur.com/v2/api_access.php
+
+| Situation | Format | Adresse |
+| --- | --- | --- |
+| Site Dhru Fusion ou logiciel compatible | Dhru Fusion | `https://gsmdeblocageserveur.com/api/index.php` |
+| Site / application sur mesure | REST JSON | `https://gsmdeblocageserveur.com/api.php` |
+
+Les deux formats utilisent la même clé, le même solde et les mêmes commandes. Seuls les services dont le prix est publié sont disponibles.
+
+## 1. Format Dhru Fusion
+
+`POST https://gsmdeblocageserveur.com/api/index.php` (formulaire) :
+
+| Champ | Valeur |
+| --- | --- |
+| `username` | e-mail du compte |
+| `apiaccesskey` | clé API (ou token) |
+| `action` | voir ci-dessous |
+| `requestformat` | `JSON` |
+| `parameters` | XML `<PARAMETERS>…</PARAMETERS>`, JSON, ou l'un des deux en base64 |
+
+| Action | Paramètres | Rôle |
+| --- | --- | --- |
+| `accountinfo` | — | Solde, devise, e-mail |
+| `imeiservicelist` | — | Services par famille : `CREDIT`, `TIME`, `Requires.Custom` |
+| `serverservicelist` | — | Services serveur |
+| `getimeiservicedetails` | `ID` | Détail d'un service |
+| `placeimeiorder` | `ID`, `IMEI`, `SN`, `QNT`, `CUSTOMFIELD` | Commander → `REFERENCEID` |
+| `getimeiorder` | `ID` | Statut + résultat |
+| `placeimeiorderbulk` | JSON base64 (≤ 100) | Commandes groupées |
+| `getimeiorderbulk` | JSON base64 | Statuts groupés |
+
+`CUSTOMFIELD` = objet JSON encodé en base64, clés = `fieldname` de `Requires.Custom`.
+
+| STATUS | Signification |
+| --- | --- |
+| 0 | Reçue, en attente |
+| 1 | En cours |
+| 3 | Rejetée — remboursée, motif dans `CODE` |
+| 4 | Terminée — résultat dans `CODE` |
+
+### Ajouter le fournisseur dans un site Dhru Fusion
+1. Settings → API Settings → Add API, type **Dhru Fusion**.
+2. URL `https://gsmdeblocageserveur.com`, Username = e-mail, API Access Key = clé.
+3. Sync / Import services, puis liez vos services.
+
+## 2. API REST JSON
+
+En-tête `X-API-Key: VOTRE_CLE_API` (ou `X-API-Token`).
+
+| Méthode | Action | Rôle |
+| --- | --- | --- |
+| GET | `?action=balance` | Solde |
+| GET | `?action=services` | Liste des services |
+| GET | `?action=service&id=123` | Détail + champs requis |
+| POST | `?action=order` | Commander (JSON) |
+| GET | `?action=status&order_id=1001` | Statut + résultat |
+| POST | `?action=refund` | Remboursement d'une commande échouée |
+
+```json
+{"service_id": 123, "imei": "356789012345678", "fields": {"model": "SM-A525F"}, "reference": "MA-REF-1"}
+```
+
+## 3. Tests
+
+Les scripts lisent vos identifiants dans des variables d'environnement (ne les écrivez jamais dans un fichier du dépôt) :
+
+```bash
+export GSM_USER="votre@email.com"
+export GSM_KEY="VOTRE_CLE_API"
+php tests/dhru_readonly_test.php      # lecture seule, gratuit
+php tests/rest_readonly_test.php      # lecture seule, gratuit
+bash examples/curl_examples.sh
+```
+
+`examples/dhru_place_order.php` passe une **vraie commande payée** : lancez-le seulement avec un service et un IMEI réels.
+
+## Sécurité
+- Clé côté serveur uniquement, jamais dans du JavaScript public ni dans un dépôt.
+- Clé compromise : régénérez-la dans Accès API (2 fois par heure maximum).
+- Interrogez un statut au plus une fois par minute par commande.
+
+Support : WhatsApp +243 89 40 97 937 — support@gsmdeblocageserveur.com

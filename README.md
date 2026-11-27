@@ -2,6 +2,10 @@
 
 Connectez votre site ou votre logiciel à **GSM Déblocage Serveur** : services, prix, commandes automatiques et résultats.
 
+> **Guide complet (connexion, tests, exemples) : https://gsmdeblocageserveur.com/documentation**
+
+**En 4 étapes :** 1. créer sa clé API → 2. connecter son site (Dhru ou sur mesure) → 3. tester la connexion avec le testeur en ligne → 4. commander et recevoir les résultats.
+
 - Documentation en ligne + testeur : https://gsmdeblocageserveur.com/v2/api_docs.php
 - Obtenir sa clé API : https://gsmdeblocageserveur.com/v2/api_access.php
 

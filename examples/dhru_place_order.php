@@ -3,7 +3,7 @@
    Usage : GSM_USER=... GSM_KEY=... php examples/dhru_place_order.php <ID_SERVICE> <IMEI> ['{"champ":"valeur"}'] */
 [$self, $id, $imei, $custom] = $argv + [null, null, null, ''];
 if (!$id || !$imei) { fwrite(STDERR, "Usage : php examples/dhru_place_order.php <ID_SERVICE> <IMEI> ['{\"champ\":\"valeur\"}']\n"); exit(2); }
-$url = 'https://gsmdeblocageserveur.com/api/index.php';
+$url = 'https://gsmdeblocageserveur.com/public/api/index.php';
 $post = function (string $action, string $xml) use ($url) {
     $ch = curl_init($url);
     curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 90,

@@ -11,14 +11,14 @@ Connectez votre site ou votre logiciel à **GSM Déblocage Serveur** : services,
 
 | Situation | Format | Adresse |
 | --- | --- | --- |
-| Site Dhru Fusion ou logiciel compatible | Dhru Fusion | `https://gsmdeblocageserveur.com/api/index.php` |
+| Site Dhru Fusion / GSM Theme ou logiciel compatible | Dhru Fusion | URL à saisir : `https://gsmdeblocageserveur.com/public` (point d'accès : `/public/api/index.php`) |
 | Site / application sur mesure | REST JSON | `https://gsmdeblocageserveur.com/api.php` |
 
 Les deux formats utilisent la même clé, le même solde et les mêmes commandes. Seuls les services dont le prix est publié sont disponibles.
 
 ## 1. Format Dhru Fusion
 
-`POST https://gsmdeblocageserveur.com/api/index.php` (formulaire) :
+`POST https://gsmdeblocageserveur.com/public/api/index.php` (formulaire). L'ancienne adresse `/api/index.php` reste valable.
 
 | Champ | Valeur |
 | --- | --- |
@@ -50,7 +50,7 @@ Les deux formats utilisent la même clé, le même solde et les mêmes commandes
 
 ### Ajouter le fournisseur dans un site Dhru Fusion
 1. Settings → API Settings → Add API, type **Dhru Fusion**.
-2. URL `https://gsmdeblocageserveur.com`, Username = e-mail, API Access Key = clé.
+2. URL `https://gsmdeblocageserveur.com/public`, Username = e-mail, API Access Key = clé.
 3. Sync / Import services, puis liez vos services.
 
 ## 2. API REST JSON

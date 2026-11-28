@@ -1,6 +1,6 @@
 <?php
 /* Test lecture seule de l'API Dhru : accountinfo, imeiservicelist, getimeiservicedetails. Usage : GSM_USER=... GSM_KEY=... php tests/dhru_readonly_test.php */
-$url = getenv('GSM_API_URL') ?: 'https://gsmdeblocageserveur.com/api/index.php';
+$url = getenv('GSM_API_URL') ?: 'https://gsmdeblocageserveur.com/public/api/index.php';
 $user = getenv('GSM_USER'); $key = getenv('GSM_KEY');
 if (!$user || !$key) { fwrite(STDERR, "Définissez GSM_USER et GSM_KEY.\n"); exit(2); }
 function call(string $url, string $user, string $key, string $action, string $params = ''): array {

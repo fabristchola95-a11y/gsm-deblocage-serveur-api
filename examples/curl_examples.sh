@@ -2,7 +2,7 @@
 # Exemples cURL (lecture seule). Usage : GSM_USER=... GSM_KEY=... bash examples/curl_examples.sh
 set -euo pipefail
 : "${GSM_USER:?Définissez GSM_USER}" "${GSM_KEY:?Définissez GSM_KEY}"
-DHRU=https://gsmdeblocageserveur.com/api/index.php
+DHRU=https://gsmdeblocageserveur.com/public/api/index.php
 REST=https://gsmdeblocageserveur.com/api.php
 
 echo "== Dhru : accountinfo"

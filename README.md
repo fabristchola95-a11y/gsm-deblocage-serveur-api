@@ -16,6 +16,25 @@ Connectez votre site ou votre logiciel à **GSM Déblocage Serveur** : services,
 
 Les deux formats utilisent la même clé, le même solde et les mêmes commandes. Seuls les services dont le prix est publié sont disponibles.
 
+## Client prêt à l'emploi (comme GSM Theme)
+
+Copiez le client dans votre projet, mettez vos identifiants dans `.env`, c'est tout.
+
+| Fichier | Pour |
+| --- | --- |
+| [`app/Http/Controllers/GsmDeblocageApiController.php`](app/Http/Controllers/GsmDeblocageApiController.php) | **Laravel** : `getAccountInfo`, `getServiceList`, `placeOrder`, `getOrder` |
+| [`routes/web.php`](routes/web.php) | Routes de test Laravel (`/api-test/...`) |
+| [`php-client/GsmDeblocageApi.php`](php-client/GsmDeblocageApi.php) | **PHP sans framework** : `accountInfo()`, `serviceList()`, `placeOrders()`, `orderStatus()` |
+| [`php-client/example.php`](php-client/example.php) | Exemple complet à lancer en ligne de commande |
+
+```env
+GSMDS_API_URL=https://gsmdeblocageserveur.com/
+GSMDS_API_USERNAME=votre@email.com
+GSMDS_API_KEY=VOTRE_CLE_API
+```
+
+Compatible avec les clients **GSM Theme** existants : remplacez seulement l'URL par `https://gsmdeblocageserveur.com/`, votre e-mail et votre clé.
+
 ## 1. Format Dhru Fusion
 
 `POST https://gsmdeblocageserveur.com/public/api/index.php` (formulaire). L'ancienne adresse `/api/index.php` reste valable.
@@ -37,6 +56,7 @@ Les deux formats utilisent la même clé, le même solde et les mêmes commandes
 | `placeimeiorder` | `ID`, `IMEI`, `SN`, `QNT`, `CUSTOMFIELD` | Commander → `REFERENCEID` |
 | `getimeiorder` | `ID` | Statut + résultat |
 | `placeimeiorderbulk` | JSON base64 (≤ 100) | Commandes groupées |
+| `placebulkorder` | JSON base64 `{"7":{"ID":25,"QNT":1,"CUSTOMFIELD":"…"}}` | Commandes groupées (format GSM Theme) → `SUCCESS.7.referenceid` |
 | `getimeiorderbulk` | JSON base64 | Statuts groupés |
 
 `CUSTOMFIELD` = objet JSON encodé en base64, clés = `fieldname` de `Requires.Custom`.

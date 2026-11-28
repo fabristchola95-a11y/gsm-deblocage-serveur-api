@@ -35,6 +35,11 @@ GSMDS_API_KEY=VOTRE_CLE_API
 
 Compatible avec les clients **GSM Theme** existants : remplacez seulement l'URL par `https://gsmdeblocageserveur.com/`, votre e-mail et votre clé.
 
+## Standard API compatible (pour les sites d'outils)
+
+Vous créez un site d'outils (licences, crédits, IMEI) et voulez que **GSM Déblocage Serveur** — ou tout panneau Dhru Fusion / GSM Theme — importe vos services et vous envoie des commandes ?
+Suivez [`api-standard/PublicApiController.php`](api-standard/PublicApiController.php) : il décrit exactement chaque requête et chaque réponse attendue (`accountinfo`, `imeiservicelist`, `getimeiorder`, `getimeiorderbulk`, `placeimeiorder`, `placebulkorder`). Branchez seulement les 4 méthodes marquées « À BRANCHER » sur votre base.
+
 ## 1. Format Dhru Fusion
 
 `POST https://gsmdeblocageserveur.com/public/api/index.php` (formulaire). L'ancienne adresse `/api/index.php` reste valable.
@@ -56,7 +61,7 @@ Compatible avec les clients **GSM Theme** existants : remplacez seulement l'URL 
 | `placeimeiorder` | `ID`, `IMEI`, `SN`, `QNT`, `CUSTOMFIELD` | Commander → `REFERENCEID` |
 | `getimeiorder` | `ID` | Statut + résultat |
 | `placeimeiorderbulk` | JSON base64 (≤ 100) | Commandes groupées |
-| `placebulkorder` | JSON base64 `{"7":{"ID":25,"QNT":1,"CUSTOMFIELD":"…"}}` | Commandes groupées (format GSM Theme) → `SUCCESS.7.referenceid` |
+| `placebulkorder` | JSON base64 `{"7":{"ID":25,"QNT":1,"CUSTOMFIELD":"…"}}` | Commandes groupées (format GSM Theme) → `SUCCESS.7` = `{status, message, referenceid}` (les erreurs aussi dans `SUCCESS`, avec `status: error`) |
 | `getimeiorderbulk` | JSON base64 | Statuts groupés |
 
 `CUSTOMFIELD` = objet JSON encodé en base64, clés = `fieldname` de `Requires.Custom`.

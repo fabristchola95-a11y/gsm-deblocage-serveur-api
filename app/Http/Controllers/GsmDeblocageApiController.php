@@ -61,7 +61,7 @@ class GsmDeblocageApiController extends Controller
     /*
      * SOLDE DU COMPTE
      * Réponse :
-     * {"SUCCESS":[{"message":"Your Accout Info","AccountInfo":{"credit":"50.00","creditraw":"50","mail":"vous@exemple.com","currency":"USD"}}],"apiversion":"6.1"}
+     * {"SUCCESS":[{"MESSAGE":"Your Account Info","AccountInfo":{"credit":"50.00 USD","creditraw":50,"mail":"vous@exemple.com","currency":"USD"}}],"apiversion":"6.1"}
      */
     public function getAccountInfo()
     {
@@ -88,8 +88,8 @@ class GsmDeblocageApiController extends Controller
      * La clé du tableau (7, 8...) est VOTRE numéro de commande : il revient dans la réponse.
      * Le montant est débité de votre solde ; remboursement automatique si la commande est rejetée.
      * Réponse :
-     * {"SUCCESS":{"7":{"status":"success","message":"Order received","referenceid":1001}},
-     *  "ERROR":{"8":{"status":"error","message":"Champ obligatoire manquant : Username."}},"apiversion":"6.1"}
+     * {"SUCCESS":{"7":{"status":"success","message":"Order received","referenceid":1001},
+     *            "8":{"status":"error","message":"Champ obligatoire manquant : Username."}},"apiversion":"6.1"}
      * Gardez "referenceid" : il sert à suivre la commande.
      */
     public function placeOrder()

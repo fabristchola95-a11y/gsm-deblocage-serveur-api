@@ -54,7 +54,7 @@ final class GsmDeblocageApi
 
     /**
      * Commandes : [votreNumero => ['service' => SERVICEID, 'qnt' => 1, 'fields' => ['IMEI' => '...', 'username' => '...']]]
-     * Réponse : SUCCESS[votreNumero]['referenceid'] (à garder) ou ERROR[votreNumero]['message']
+     * Réponse : SUCCESS[votreNumero] = ['status' => 'success', 'referenceid' => …] (à garder) ou ['status' => 'error', 'message' => …]
      */
     public function placeOrders(array $orders): array
     {
